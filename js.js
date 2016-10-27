@@ -1,5 +1,15 @@
 // JavaScript Document
+var config = {
+  syncURL: "https://danmushaw.wilddogio.com" //输入节点 URL
+};
+wilddog.initializeApp(config);
+var ref = wilddog.sync().ref();
+
 var dataArr=[];
+
+ref.set({
+	'content':dataArr
+});
 var time;
 $('#input').on('focus',function(){
 	if($(this).val()=='说点什么？'){
@@ -13,15 +23,15 @@ $('#input').on('blur',function(){
 })
 $('#shoot').on('click',function(){
 	if($('#input').val()!='说点什么？'&&$('#input').val()!=''){
-		dataArr.push($('#input').val());
+		ref.child('content').push($('#input').val());
 		$('#input').val('说点什么？');
-		shoot();
 		if(dataArr.length==1){
 			setTimeout('dis()',3000);
 		}
 		if(dataArr.length>100){
 			dataArr.shift();
 		}
+
 	}
 })
 $('#clear').on('click',function(){
@@ -30,6 +40,12 @@ $('#clear').on('click',function(){
 	clearInterval(time);
 	$('#area').empty();
 })
+
+ref.child('content').on('child_added', function(snapshot) {
+		var text = snapshot.val();
+		dataArr.push(text);
+		shoot();
+	});
 function move(ele){
 	ele.animate({right:$('#area').width()},6000,'easeInQuad');
 }
@@ -46,15 +62,13 @@ function shoot(){
 }
 function dis(){
 	var $con=$("<div class='content'>"+dataArr[randomInt(dataArr.length)]+"</div>");
-	if(conHeight>$('#area').height()-30){
+	if(conHeight>$('#area').height()-20){
 	conHeight=conHeight-$('#area').height();
 	}
 	$con.css({'top':conHeight,'color':'rgb('+randomInt(255)+','+randomInt(255)+','+randomInt(255)+')'})
 	$con.appendTo($('#area'));
 	move($con);
 	conHeight+=50;
-	var length=$('.content').length;
-	console.log(length);
 	if($('.content').length>100){
 		$('.content:lt(50)').remove();
 	}
@@ -64,3 +78,4 @@ function dis(){
 function randomInt(ele){
 	return Math.floor(Math.random()*ele);	
 }
+
