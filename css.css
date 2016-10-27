@@ -1,0 +1,11 @@
+@charset "utf-8";
+/* CSS Document */
+*{margin:0;padding:0}
+#area{height:380px;width:90%;margin:15px auto;border:1px solid #e5e5e5;overflow:hidden;position:relative}
+#input{height:38px;display:block;width:400px;border:1px solid #ccc;border-radius:5px;margin:0 auto;color:#a9a9a9;padding-left:10px;font-size:15px;outline-radius:5px;}
+.button{width:326px;margin:15px auto;}
+#shoot,#clear{width:159px;height:35px;border-radius:5px;background:none;text-align:center;}
+#shoot{border:1px solid #e6501e;color:#e6501e;float:left}
+#clear{border:1px solid #b0a8a5;color:#b0a8a5;float:right}
+.content{width:auto;display:inline-block;height:50px;line-height:50px;position:absolute;right:0;font-size:20px;overflow: hidden}
+
